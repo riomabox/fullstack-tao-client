@@ -1,33 +1,55 @@
-import { useEffect, useState } from 'react'
-import { supabase } from './supabaseClient'
+// import { useEffect, useState } from "react";
+// import { supabase } from "./supabaseClient";
+// import { Link } from "react-router";
 
 function App() {
-  const [dbStatus, setDbStatus] = useState<string>('Checking backend...')
-
-  useEffect(() => {
-    // Basic connectivity check to your self-hosted instance
-    supabase.auth.getSession()
-      .then(() => setDbStatus('Connected to Self-Hosted Supabase!'))
-      .catch(() => setDbStatus('Connection failed. Is Docker running?'))
-  }, [])
+  const prompt = {
+    title: "What is the meaning of life?",
+    answers: [
+      {
+        text: "42",
+        author: {
+          name: "John Doe",
+        },
+      },
+    ],
+    answered: true,
+  };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6">
-      <div className="max-w-md w-full bg-slate-900 border border-slate-800 p-8 rounded-xl shadow-2xl text-center">
-        <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 mb-2">
-          Windows Environment
-        </h1>
-        <p className="text-sm text-slate-400 mb-6">React (Vite) + Tailwind + Docker Backend</p>
-        
-        <div className="p-4 bg-slate-950 rounded-lg border border-slate-800">
-          <span className="text-xs uppercase tracking-wider font-mono block text-slate-500 mb-1">
-            Backend Connection Status
-          </span>
-          <p className="text-emerald-400 font-mono font-medium">{dbStatus}</p>
-        </div>
-      </div>
+    <div>
+      {/* <header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+      </header> */}
+      <main>
+        {prompt.answered ? (
+          prompt.answers.map((answer) => (
+            <div key={answer.text}>
+              <p>{answer.text}</p>
+              <div>— {answer.author.name}</div>
+            </div>
+          ))
+        ) : (
+          <form>
+            <textarea></textarea>
+            <button>Submit</button>
+          </form>
+        )}
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
