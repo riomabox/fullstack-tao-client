@@ -1,20 +1,32 @@
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import { supabase } from "./supabaseClient";
 // import { Link } from "react-router";
 
+interface answers {
+  text: number;
+  author: { name: string };
+}
+
+interface Prompt {
+  title: string;
+  answers: answers[];
+  answered: boolean;
+}
+
+const emptyPrompt: Prompt = {
+  title: "",
+  answers: [],
+  answered: false,
+};
+
 function App() {
-  const prompt = {
-    title: "What is the meaning of life?",
-    answers: [
-      {
-        text: "42",
-        author: {
-          name: "John Doe",
-        },
-      },
-    ],
-    answered: true,
-  };
+  const [prompt, setPrompt] = useState(emptyPrompt);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/prompts")
+      .then((res) => res.json())
+      .then((data) => setPrompt(data));
+  }, []);
 
   return (
     <div>
