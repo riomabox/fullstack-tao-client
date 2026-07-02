@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import Layout from "./Layout";
 // import { supabase } from "./supabaseClient";
-// import { Link } from "react-router";
 
 interface answers {
   text: number;
@@ -29,22 +29,7 @@ function App() {
   }, []);
 
   return (
-    <div>
-      {/* <header>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-      </header> */}
+    <Layout>
       <main>
         {prompt.answered ? (
           prompt.answers.map((answer) => (
@@ -60,7 +45,7 @@ function App() {
           </form>
         )}
       </main>
-    </div>
+    </Layout>
   );
 }
 
