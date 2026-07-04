@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Layout from "./Layout";
+import Layout from "./layout/Layout";
 import promptClient from "./Prompt-client";
-import { AnswerList } from "./AnswerList";
-import { AnswerForm } from "./AnswerForm";
+import { AnswerList } from "./components/AnswerList";
+import { AnswerForm } from "./components/AnswerForm";
 
 interface Answer {
         text: string;
