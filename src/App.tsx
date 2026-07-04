@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "./Layout";
+import promptClient from "./Prompt-client";
 
 interface Answer {
         text: string;
@@ -23,26 +24,9 @@ function App() {
         const [loading, setLoading] = useState(true);
 
         useEffect(() => {
-                fetch("/api/v1/prompts")
-                        .then((res) => res.json())
+                promptClient
+                        .getActivePrompt()
                         .then((data) => setPrompt(data))
-                        // .catch(() => {
-                        //         // fallback demo content
-                        //         setPrompt({
-                        //                 title: "What's a small improvement you made this week?",
-                        //                 answers: [
-                        //                         {
-                        //                                 text: "Added micro-interactions to the header.",
-                        //                                 author: { name: "Alice" },
-                        //                         },
-                        //                         {
-                        //                                 text: "Improved accessibility and contrast.",
-                        //                                 author: { name: "Bob" },
-                        //                         },
-                        //                 ],
-                        //                 answered: true,
-                        //         });
-                        // })
                         .finally(() => setLoading(false));
         }, []);
 
