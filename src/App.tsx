@@ -23,13 +23,21 @@ const emptyPrompt: Prompt = {
 
 function App() {
         const [prompt, setPrompt] = useState<Prompt>(emptyPrompt);
-        const [loading, setLoading] = useState(true);
+        const [isLoading, setIsLoading] = useState(true);
+        const [isError, setIsError] = useState(false);
 
-        useEffect(() => {
+        const getPrompt = () => {
+                setIsLoading(true);
+
                 promptClient
                         .getActivePrompt()
                         .then((data) => setPrompt(data))
-                        .finally(() => setLoading(false));
+                        .catch(() => setIsError(true))
+                        .finally(() => setIsLoading(false));
+        };
+
+        useEffect(() => {
+                getPrompt();
         }, []);
 
         return (
@@ -41,12 +49,16 @@ function App() {
                                 <p className="text-gray-600">A clean, elegant UI built with Tailwind CSS.</p>
                         </section>
 
-                        {loading ? (
+                        {isLoading ? (
                                 <div className="text-center py-20">Loading...</div>
                         ) : prompt.answered ? (
                                 <AnswerList answers={prompt.answers} />
                         ) : (
-                                <AnswerForm />
+                                <AnswerForm
+                                        onSubmit={(answer) => {
+                                                promptClient.createAnswer(answer).then(() => getPrompt());
+                                        }}
+                                />
                         )}
                 </Layout>
         );
