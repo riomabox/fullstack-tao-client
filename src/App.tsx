@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import Layout from "./layout/Layout";
 import promptClient from "./Prompt-client";
 import { AnswerList } from "./components/AnswerList";
 import { AnswerForm } from "./components/AnswerForm";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Answer {
         text: string;
@@ -22,23 +22,31 @@ const emptyPrompt: Prompt = {
 };
 
 function App() {
-        const [prompt, setPrompt] = useState<Prompt>(emptyPrompt);
-        const [isLoading, setIsLoading] = useState(true);
-        const [isError, setIsError] = useState(false);
+        const queryClient = useQueryClient();
 
-        const getPrompt = () => {
-                setIsLoading(true);
+        // Fetching prompt data
+        const {
+                data: prompt,
+                isLoading,
+                isError,
+        } = useQuery({
+                queryKey: "prompt",
+                queryFn: promptClient.getActivePrompt,
+                initialData: emptyPrompt,
+        });
 
-                promptClient
-                        .getActivePrompt()
-                        .then((data) => setPrompt(data))
-                        .catch(() => setIsError(true))
-                        .finally(() => setIsLoading(false));
+        // Handling answer submission
+        const mutation = useMutation({
+                mutationFn: promptClient.createAnswer,
+                onSuccess: () => {
+                        // Invalidate and refetch
+                        queryClient.invalidateQueries("prompt");
+                },
+        });
+
+        const handleSubmit = (answer) => {
+                mutation.mutate(answer);
         };
-
-        useEffect(() => {
-                getPrompt();
-        }, []);
 
         return (
                 <Layout>
@@ -54,11 +62,7 @@ function App() {
                         ) : prompt.answered ? (
                                 <AnswerList answers={prompt.answers} />
                         ) : (
-                                <AnswerForm
-                                        onSubmit={(answer) => {
-                                                promptClient.createAnswer(answer).then(() => getPrompt());
-                                        }}
-                                />
+                                <AnswerForm onSubmit={handleSubmit} />
                         )}
                 </Layout>
         );
