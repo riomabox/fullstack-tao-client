@@ -22,12 +22,8 @@ export default function usePrompt() {
         const queryClient = useQueryClient();
 
         // Fetching prompt data
-        const {
-                data: prompt,
-                isLoading,
-                isError,
-        } = useQuery({
-                queryKey: "prompt",
+        const { data: prompt, isLoading } = useQuery({
+                queryKey: ["prompt"],
                 queryFn: promptClient.getActivePrompt,
                 initialData: emptyPrompt,
         });
@@ -37,11 +33,11 @@ export default function usePrompt() {
                 mutationFn: promptClient.createAnswer,
                 onSuccess: () => {
                         // Invalidate and refetch
-                        queryClient.invalidateQueries("prompt");
+                        queryClient.invalidateQueries({ queryKey: ["prompt"] });
                 },
         });
 
-        const handleSubmit = (answer) => {
+        const handleSubmit = (answer: { text: string; author: { name: string } }) => {
                 mutation.mutate(answer);
         };
 

@@ -1,15 +1,19 @@
-const getActivePrompt = () => {
-        return fetch("/api/prompts").then((res) => res.json());
+import axios from "axios";
+
+const api = axios.create({
+        headers: {
+                "Content-Type": "application/json",
+        },
+});
+
+const getActivePrompt = async () => {
+        const { data } = await api.get("/api/prompts");
+        return data;
 };
 
-const createAnswer = (answer: { text: string; author: { name: string } }) => {
-        return fetch("/api/answers", {
-                method: "POST",
-                headers: {
-                        "Content-Type": "application/json",
-                },
-                body: JSON.stringify(answer),
-        });
+const createAnswer = async (answer: { text: string; author: { name: string } }) => {
+        const { data } = await api.post("/api/answers", answer);
+        return data;
 };
 
 export default {
