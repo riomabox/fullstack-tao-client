@@ -3,20 +3,9 @@ import promptClient from "../api/Prompt-client";
 import queryKeys from "./query-keys";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { type Prompt } from "../types/Prompt";
 
 dayjs.extend(relativeTime);
-
-interface Answer {
-        text: string;
-        author: { name: string };
-        createdAt: string;
-}
-
-interface Prompt {
-        title: string;
-        answers: Answer[];
-        answered: boolean;
-}
 
 const emptyPrompt: Prompt = {
         title: "",
