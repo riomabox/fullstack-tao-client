@@ -42,6 +42,8 @@ export default function usePrompt() {
                 queryKey: queryKeys.prompt,
                 queryFn: promptClient.getActivePrompt,
                 initialData: emptyPrompt,
+                // select: (prompt) => formatPrompt(prompt),
+                select: formatPrompt,
         });
 
         // Handling answer submission
@@ -58,7 +60,7 @@ export default function usePrompt() {
         };
 
         return {
-                prompt: formatPrompt(prompt),
+                prompt,
                 isLoading,
                 handleSubmit,
         };
