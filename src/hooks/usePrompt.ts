@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import promptClient from "../api/Prompt-client";
+import queryKeys from "./query-keys";
 
 interface Answer {
         text: string;
@@ -23,7 +24,7 @@ export default function usePrompt() {
 
         // Fetching prompt data
         const { data: prompt, isLoading } = useQuery({
-                queryKey: ["prompt"],
+                queryKey: queryKeys.prompt,
                 queryFn: promptClient.getActivePrompt,
                 initialData: emptyPrompt,
         });
@@ -33,7 +34,7 @@ export default function usePrompt() {
                 mutationFn: promptClient.createAnswer,
                 onSuccess: () => {
                         // Invalidate and refetch
-                        queryClient.invalidateQueries({ queryKey: ["prompt"] });
+                        queryClient.invalidateQueries({ queryKey: queryKeys.prompt });
                 },
         });
 
