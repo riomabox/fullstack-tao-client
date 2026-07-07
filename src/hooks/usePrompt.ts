@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import promptClient from "../api/Prompt-client";
 import queryKeys from "./query-keys";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 interface Answer {
         text: string;
@@ -43,7 +47,13 @@ export default function usePrompt() {
         };
 
         return {
-                prompt,
+                prompt: {
+                        ...prompt,
+                        answers: prompt.answers.map((answer) => ({
+                                ...answer,
+                                createdAt: dayjs(answer.createdAt).fromNow(true),
+                        })),
+                },
                 isLoading,
                 handleSubmit,
         };

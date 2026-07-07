@@ -1,8 +1,3 @@
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-
-dayjs.extend(relativeTime);
-
 export const AnswerList = ({ answers }) => {
         return (
                 <section className="grid md:grid-cols-2 gap-6">
@@ -10,9 +5,7 @@ export const AnswerList = ({ answers }) => {
                                 <article key={idx} className="p-6 bg-white shadow rounded-lg">
                                         <p className="text-gray-800 mb-4">{answer.text}</p>
                                         <div className="text-sm text-gray-500">— {answer.author.name}</div>
-                                        <div className="text-sm text-gray-500">
-                                                {dayjs(answer.createdAt).fromNow(true)}
-                                        </div>
+                                        <div className="text-sm text-gray-500">{answer.createdAt}</div>
                                 </article>
                         ))}
                 </section>
