@@ -4,11 +4,13 @@
                 "answers": [
                         {
                                 "text": "Added micro-interactions to the header.",
-                                "author": { "name": "Alice" }
+                                "author": { "name": "Alice" },
+                                "createdAt": "2026-07-05T09:30:00.000Z"
                         },
                         {
                                 "text": "Improved accessibility and contrast.",
-                                "author": { "name": "Bob" }
+                                "author": { "name": "Bob" },
+                                "createdAt": "2026-06-29T12:00:00.000Z"
                         }
                 ],
                 "answered": true
