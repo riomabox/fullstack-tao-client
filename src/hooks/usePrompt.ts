@@ -9,6 +9,7 @@ dayjs.extend(relativeTime);
 interface Answer {
         text: string;
         author: { name: string };
+        createdAt: string;
 }
 
 interface Prompt {
@@ -21,6 +22,16 @@ const emptyPrompt: Prompt = {
         title: "",
         answers: [],
         answered: false,
+};
+
+const formatPrompt = (prompt: Prompt) => {
+        return {
+                ...prompt,
+                answers: prompt.answers.map((answer) => ({
+                        ...answer,
+                        createdAt: dayjs(answer.createdAt).fromNow(true),
+                })),
+        };
 };
 
 export default function usePrompt() {
@@ -47,13 +58,7 @@ export default function usePrompt() {
         };
 
         return {
-                prompt: {
-                        ...prompt,
-                        answers: prompt.answers.map((answer) => ({
-                                ...answer,
-                                createdAt: dayjs(answer.createdAt).fromNow(true),
-                        })),
-                },
+                prompt: formatPrompt(prompt),
                 isLoading,
                 handleSubmit,
         };
