@@ -1,7 +1,7 @@
 import Layout from "./layout/Layout";
 import { AnswerList } from "./components/AnswerList";
 import { AnswerForm } from "./components/AnswerForm";
-import usePrompt from "./usePrompt";
+import usePrompt from "./hooks/usePrompt";
 
 function App() {
         const { prompt, handleSubmit, isLoading } = usePrompt();

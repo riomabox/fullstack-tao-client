@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import promptClient from "./Prompt-client";
+import promptClient from "../api/Prompt-client";
 
 interface Answer {
         text: string;
