@@ -7,11 +7,11 @@ import { type Prompt } from "../types/Prompt";
 
 dayjs.extend(relativeTime);
 
-const emptyPrompt: Prompt = {
-        title: "",
-        answers: [],
-        answered: false,
-};
+// const emptyPrompt: Prompt = {
+//         title: "",
+//         answers: [],
+//         answered: false,
+// };
 
 const formatPrompt = (prompt: Prompt) => {
         return {
@@ -30,7 +30,7 @@ export default function usePrompt() {
         const { data: prompt } = useQuery({
                 queryKey: queryKeys.prompt,
                 queryFn: promptClient.getActivePrompt,
-                initialData: emptyPrompt,
+                // initialData: emptyPrompt,
                 // select: (prompt) => formatPrompt(prompt),
                 select: formatPrompt,
         });
