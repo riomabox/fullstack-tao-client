@@ -4,7 +4,7 @@ import { AnswerForm } from "./components/AnswerForm";
 import usePrompt from "./hooks/usePrompt";
 
 function App() {
-        const { prompt, handleSubmit, isLoading } = usePrompt();
+        const { prompt, handleSubmit } = usePrompt();
 
         return (
                 <Layout>
@@ -15,9 +15,7 @@ function App() {
                                 <p className="text-gray-600">A clean, elegant UI built with Tailwind CSS.</p>
                         </section>
 
-                        {isLoading ? (
-                                <div className="text-center py-20">Loading...</div>
-                        ) : prompt.answered ? (
+                        {prompt.answered ? (
                                 <AnswerList answers={prompt.answers} />
                         ) : (
                                 <AnswerForm onSubmit={handleSubmit} />

@@ -27,7 +27,7 @@ export default function usePrompt() {
         const queryClient = useQueryClient();
 
         // Fetching prompt data
-        const { data: prompt, isLoading } = useQuery({
+        const { data: prompt } = useQuery({
                 queryKey: queryKeys.prompt,
                 queryFn: promptClient.getActivePrompt,
                 initialData: emptyPrompt,
@@ -50,7 +50,6 @@ export default function usePrompt() {
 
         return {
                 prompt,
-                isLoading,
                 handleSubmit,
         };
 }
