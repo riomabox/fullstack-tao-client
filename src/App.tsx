@@ -1,8 +1,7 @@
 import Layout from "./layout/Layout";
-import { AnswerList } from "./components/AnswerList";
-import { AnswerForm } from "./components/AnswerForm";
 import usePrompt from "./hooks/usePrompt";
-import { RandomInspirationalQuote } from "./components/RandomInspirationalQuote";
+import RandomInspirationalQuote from "./components/RandomInspirationalQuote";
+import PromptContent from "./components/PromptContent";
 
 function App() {
         const { prompt, handleSubmit } = usePrompt();
@@ -13,15 +12,10 @@ function App() {
                                 <h1 className="text-4xl font-display font-extrabold text-gray-900 mb-4">
                                         {prompt?.title || "Welcome to ClassyApp"}
                                 </h1>
-                                <p className="text-gray-600">A clean, elegant UI built with Tailwind CSS.</p>
                         </section>
 
                         {prompt ? (
-                                prompt.answered ? (
-                                        <AnswerList answers={prompt.answers} />
-                                ) : (
-                                        <AnswerForm onSubmit={handleSubmit} />
-                                )
+                                <PromptContent prompt={prompt} handleSubmit={handleSubmit} />
                         ) : (
                                 <RandomInspirationalQuote />
                         )}

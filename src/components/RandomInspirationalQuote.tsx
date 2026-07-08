@@ -1,4 +1,4 @@
-export const RandomInspirationalQuote = () => {
+export default function RandomInspirationalQuote() {
         return (
                 <section className="grid md:grid-cols-1 gap-6 self-center">
                         <article className="p-6 bg-white shadow rounded-lg">
@@ -8,4 +8,4 @@ export const RandomInspirationalQuote = () => {
                         </article>
                 </section>
         );
-};
+}
